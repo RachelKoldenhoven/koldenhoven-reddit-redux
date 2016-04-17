@@ -5,7 +5,6 @@ var express = require('express');
 var router = express.Router();
 var moment = require('moment');
 var jwt = require('jwt-simple');
-
 var User = require('../models/users');
 var config = require('../../_config');
 

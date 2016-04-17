@@ -1,49 +1,64 @@
-<!-- add student -->
-<div class="col-md-3 verticalLine" ng-controller="addStudentController">
-    <h2>Add New Student</h2>
-    <br>
-    <form class="form" ng-submit="addStudent()">
-        <div class="form-group">
-            <label>First Name</label>
-            <input ng-model="student.firstName" class="form-control" type="text" required>
+<!--display all posts-->
+<main ng-controller="RedditController">
+    <div class="posts">
+        <p>{{ view.greeting }}</p>
+        <div class="onePost" ng-repeat="post in view.allPosts | orderBy: '-' + display |  filter:searchText">
+            <figure>
+                <img ng-src="{{post.image}}">
+            </figure>
+            <div class="content">
+                <div class="titleRow">
+                    <h1 id="title">{{ post.title }}</h1>
+                    <img class="arrow" src="../resources/arrowUp.png" ng-click="upVote(post)">
+                    <img class="arrow" src="../resources/arrow.png" ng-click="downVote(post)">
+                    <p ng-class="voteClass(post)">{{ post.votes }}</p>
+                    <p id="author">{{ post.author }}</p>
+                </div>
+                <p id="postText">{{ post.text }}</p>
+                <div class="dateRow">
+                    <p id="date">{{ post.date | date:'fullDate' }}</p>
+                    <p ng-click="toggleComments(post)">|    {{ post.comments.length}}
+                        <ng-pluralize count="{{post.comments.length}}"
+                                      when="{'one': 'comment',
+                                            'other': 'comments'}">
+                        </ng-pluralize></p>
+                    <p id="addComment" ng-click="viewCommentForm(post)">|    Add Comment</p>
+                </div><br>
+                <div class="comments" ng-show="post.showComments === true" ng-repeat="comment in post.comments">
+                    <p>{{comment.user}}</p>
+                    <p> - {{comment.comment}}</p>
+                </div>
+                <!--add new comment form-->
+                <div class="newComment" ng-show="post.viewNewCommentForm === true">
+                    <form class="addCommentForm" name="newCommentForm" ng-submit="newComment(newUserComment, post)" novalidate>
+                        <p>Author:</p>
+                        <input type="text"
+                               name="user"
+                               ng-model="newUserComment.user"
+                               required>
+                        <div class="error"
+                             ng-show="newCommentForm.user.$touched && newCommentForm.user.$dirty && newCommentForm.user.$invalid">
+                            <small class="error"
+                                   ng-show="newCommentForm.user.$error.required">
+                                An author name is required.
+                            </small>
+                        </div>
+                        <p>Comment: </p>
+                        <input type="text"
+                               name="comment"
+                               ng-model="newUserComment.comment"
+                               required>
+                        <div class="error"
+                             ng-show="newCommentForm.comment.$touched && newCommentForm.comment.$dirty && newCommentForm.comment.$invalid">
+                            <small class="error"
+                                   ng-show="newCommentForm.comment.$error.required">
+                                A comment is required.
+                            </small>
+                        </div>
+                        <button type="submit" class="button" ng-disabled="newCommentForm.$invalid">Submit Comment</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label>Last Name</label>
-            <input ng-model="student.lastName" class="form-control" type="text" required>
-        </div>
-        <div class="form-group">
-            <label>Year</label>
-            <input ng-model="student.year" class="form-control" type="number" min="1960" max="2016" step="1" required>
-        </div>
-        <button type="submit" class="btn btn-success">Add Student</button>
-    </form>
-</div>
-<!-- all students -->
-<div class="col-md-7" ng-controller="allStudentController">
-    <h2>All Students</h2>
-    <br>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Year</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody ng-controller="editStudentController">
-        <tr ng-repeat="student in allStudents">
-            <td ng-class="{'editable': show}" contenteditable="{{show}}" ng-model="student.firstName">{{student.firstName}}</td>
-            <td ng-class="{'editable': show}" contenteditable="{{show}}" ng-model="student.lastName">{{ student.lastName }}</td>
-            <td ng-class="{'editable': show}"contenteditable="{{show}}" ng-model="student.year">{{ student.year }}</td>
-            <td>
-          <span><button class="btn btn-xs btn-warning" ng-show="!show" ng-click="makeEditable()">Edit</button>
-          </span>
-          <span><button class="btn btn-xs btn-success" ng-show="show" ng-click="editStudent(student)">Save</button>
-          <span ng-controller="removeStudentController"><button class="btn btn-xs btn-danger" ng-click="removeStudent(student)">Remove</button></span>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-</div>
+    </div>
+</main>

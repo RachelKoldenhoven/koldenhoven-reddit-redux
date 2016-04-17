@@ -1,26 +1,77 @@
-app.controller('allStudentController', ['$scope', 'studentDataService',
-  function($scope, studentDataService) {
+//app.controller('allStudentController', ['$scope', 'studentDataService',
+//  function($scope, studentDataService) {
+//
+//    studentDataService.getAllPosts()
+//      .then(function(posts) {
+//        $scope.allPosts = posts.data.data;
+//      });
+//
+//  }]);
 
-    studentDataService.getAllStudents()
-      .then(function(students) {
-        $scope.allStudents = students.data.data;
-      });
 
-  }]);
+app.controller("RedditController", ['$scope', 'postDataService', function($scope, postDataService) {
+  $scope.view = {};
+  $scope.view.greeting = "Redditcontroller is working";
+  postDataService.getAllPosts()
+    .then(function(posts) {
+      console.log(posts);
+      $scope.view.allPosts = posts.data.data;
+    });
+  $scope.viewNewPostForm = false;
+  $scope.newVolcano = {};
+  $scope.newUserComment = {};
+  $scope.upVote = function(post) {
+    post.votes +=1;
+  };
 
+  $scope.downVote = function(post) {
+    post.votes -=1;
+  };
 
-app.controller('addStudentController', ['$scope', '$window', 'studentDataService',
-  function($scope, $window, studentDataService) {
+  $scope.voteClass = function(post) {
+    if(post.votes === 0) {
+      return "black";
+    }
+    if(post.votes > 0) {
+      return "green";
+    }
+    else {
+      return "red";
+    }
+  };
 
-    $scope.student = {};
+  $scope.viewPostForm = function(){
+    $scope.viewNewPostForm = !$scope.viewNewPostForm;
+  };
 
-    $scope.addStudent = function() {
-      studentDataService.addStudent($scope.student);
-      $scope.student = {};
-      $window.location.reload(); // refactor!
-    };
+  $scope.newPost = function(post) {
+    post.date =  new Date();
+    post.votes = 0;
+    post.comments = [
+      {}
+    ];
+    $scope.view.posts.push(post);
+    $scope.viewPostForm();
+    $scope.newVolcano = {};
+    $scope.newPostForm.$setUntouched();
+  };
 
-  }]);
+  $scope.toggleComments = function(post){
+    post.showComments = !post.showComments;
+  };
+
+  $scope.viewCommentForm = function(post) {
+    post.viewNewCommentForm = !post.viewNewCommentForm;
+  };
+
+  $scope.newComment = function(comment, post) {
+    post.comments.push(comment);
+    $scope.viewCommentForm(post);
+    $scope.newUserComment = {};
+    $scope.newCommentForm.$setUntouched();
+  };
+
+}]);
 
 app.controller('removeStudentController', ['$scope', '$window', 'studentDataService',
   function($scope, $window, studentDataService) {
@@ -85,6 +136,6 @@ app.controller('loginController', ['$rootScope', '$scope', '$location', 'authSer
 app.controller('navController', ['$rootScope', '$scope', 'authService',
   function($rootScope, $scope, authService){
     $rootScope.currentUser = authService.getUserInfo();
-  }]);/**
- * Created by rachelkoldenhoven on 4/17/16.
- */
+  }]);
+
+

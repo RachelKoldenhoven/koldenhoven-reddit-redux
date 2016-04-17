@@ -14,7 +14,7 @@ var config = require('../_config');
 
 // *** routes *** //
 var routes = require('./routes/index.js');
-var studentRoutes = require('./routes/students.js');
+var postRoutes = require('./routes/posts.js');
 var userRoutes = require('./routes/users.js');
 
 
@@ -29,6 +29,8 @@ var mongoURI = config.mongoURI[environment];
 mongoose.connect(mongoURI, function(err, res) {
   if (err) {
     console.log('Error connecting to the database. ' + err);
+  }  else {
+    console.log('Connected to Database: ' + config.mongoURI[app.settings.env]);
   }
 });
 
@@ -49,7 +51,7 @@ app.use(express.static(path.join(__dirname, '../client')));
 
 // *** main routes *** //
 app.use('/', routes);
-app.use('/students', studentRoutes);
+app.use('/posts', postRoutes);
 app.use('/auth', userRoutes);
 
 

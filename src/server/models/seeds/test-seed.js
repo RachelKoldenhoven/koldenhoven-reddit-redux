@@ -27,6 +27,7 @@ function runSeed(done) {
   var post = new Post(data[0]);
   post.save()
     .then(function(){
+      console.log('seed');
       done();
     });
 }
@@ -35,4 +36,5 @@ function runSeed(done) {
 module.exports = {
   runSeed: runSeed
 };
+
 

@@ -3,15 +3,21 @@
  */
 var express = require('express');
 var router = express.Router();
-var Student = require('../models/students');
+var Post = require('../models/posts');
 
-// GET ALL students
+var seed = require('../models/seeds/test-seed');
+
+// GET ALL posts
 router.get('/', function (req, res, next) {
-  Student.find({})
-    .then(function(students) {
+
+
+
+  Post.find({})
+    .then(function(posts) {
+      console.log("posts: ", posts);
       res.status(200).json({
         status: 'success',
-        data: students
+        data: posts
       });
     })
     .catch(function (err) {
@@ -19,13 +25,13 @@ router.get('/', function (req, res, next) {
     });
 });
 
-// GET single students
+// GET single post
 router.get('/:id', function (req, res, next) {
-  Student.findById(req.params.id)
-    .then(function (student) {
+  Post.findById(req.params.id)
+    .then(function (post) {
       res.status(200).json({
         status:'success',
-        data: student
+        data: post
       });
     })
     .catch(function (err) {
@@ -33,14 +39,14 @@ router.get('/:id', function (req, res, next) {
     });
 });
 
-// add student
+// add post
 router.post('/', function (req, res, next) {
-  var student = new Student(req.body);
-  student.save()
-    .then(function (student) {
+  var post = new Post(req.body);
+  post.save()
+    .then(function (post) {
       res.status(200).json({
         status: 'success',
-        data: student
+        data: post
       });
     })
     .catch(function (err) {
@@ -48,15 +54,15 @@ router.post('/', function (req, res, next) {
     });
 });
 
-// update student
+// update post
 router.put('/:id', function (req, res, next) {
-  var student_id = req.params.id;
+  var post_id = req.params.id;
   var option = req.body;
-  Student.findByIdAndUpdate(req.params.id, req.body, {new:true})
-    .then(function (student) {
+  Post.findByIdAndUpdate(req.params.id, req.body, {new:true})
+    .then(function (post) {
       res.status(200).json({
         status: 'success',
-        data: student
+        data: post
       });
     })
     .catch(function (err) {
@@ -64,13 +70,13 @@ router.put('/:id', function (req, res, next) {
     });
 });
 
-// remove student
+// remove post
 router.delete('/:id', function (req, res, next) {
-  Student.findByIdAndRemove(req.params.id)
-    .then(function (student) {
+  Post.findByIdAndRemove(req.params.id)
+    .then(function (post) {
       res.status(200).json({
         status: 'success',
-        data: student
+        data: post
       });
     })
     .catch(function (err) {

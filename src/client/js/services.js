@@ -1,31 +1,31 @@
 /**
  * Created by rachelkoldenhoven on 4/17/16.
  */
-app.service('studentDataService', ['$rootScope', 'crudService', function($rootScope, crudService) {
+app.service('postDataService', ['$rootScope', 'crudService', function($rootScope, crudService) {
 
   return {
-    getAllStudents: function() {
-      return crudService.getAll('students')
-        .then(function(students) {
-          return students;
+    getAllPosts: function() {
+      return crudService.getAll('posts')
+        .then(function(posts) {
+          return posts;
         });
     },
-    addStudent: function(payload) {
-      crudService.addOne('students', payload)
-        .then(function(student) {
-          return student;
+    addPost: function(payload) {
+      crudService.addOne('posts', payload)
+        .then(function(post) {
+          return post;
         });
     },
-    editStudent: function(student) {
-      crudService.editOne('students', student)
-        .then(function(student) {
-          return student;
+    editPost: function(post) {
+      crudService.editOne('students', post)
+        .then(function(post) {
+          return post;
         });
     },
-    removeStudent: function(studentID) {
-      crudService.removeOne('students', studentID)
-        .then(function(student) {
-          return student;
+    removeStudent: function(postID) {
+      crudService.removeOne('posts', postID)
+        .then(function(post) {
+          return post;
         });
     }
   };
@@ -39,6 +39,7 @@ app.service('crudService', ['$http', function($http) {
     getAll: function(resource) {
       return $http.get('/'+resource)
         .then(function(res){
+          console.log(res);
           return res;
         })
         .catch(function(err){
