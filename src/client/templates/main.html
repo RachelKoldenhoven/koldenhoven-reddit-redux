@@ -1,0 +1,49 @@
+<!-- add student -->
+<div class="col-md-3 verticalLine" ng-controller="addStudentController">
+    <h2>Add New Student</h2>
+    <br>
+    <form class="form" ng-submit="addStudent()">
+        <div class="form-group">
+            <label>First Name</label>
+            <input ng-model="student.firstName" class="form-control" type="text" required>
+        </div>
+        <div class="form-group">
+            <label>Last Name</label>
+            <input ng-model="student.lastName" class="form-control" type="text" required>
+        </div>
+        <div class="form-group">
+            <label>Year</label>
+            <input ng-model="student.year" class="form-control" type="number" min="1960" max="2016" step="1" required>
+        </div>
+        <button type="submit" class="btn btn-success">Add Student</button>
+    </form>
+</div>
+<!-- all students -->
+<div class="col-md-7" ng-controller="allStudentController">
+    <h2>All Students</h2>
+    <br>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Year</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody ng-controller="editStudentController">
+        <tr ng-repeat="student in allStudents">
+            <td ng-class="{'editable': show}" contenteditable="{{show}}" ng-model="student.firstName">{{student.firstName}}</td>
+            <td ng-class="{'editable': show}" contenteditable="{{show}}" ng-model="student.lastName">{{ student.lastName }}</td>
+            <td ng-class="{'editable': show}"contenteditable="{{show}}" ng-model="student.year">{{ student.year }}</td>
+            <td>
+          <span><button class="btn btn-xs btn-warning" ng-show="!show" ng-click="makeEditable()">Edit</button>
+          </span>
+          <span><button class="btn btn-xs btn-success" ng-show="show" ng-click="editStudent(student)">Save</button>
+          <span ng-controller="removeStudentController"><button class="btn btn-xs btn-danger" ng-click="removeStudent(student)">Remove</button></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
