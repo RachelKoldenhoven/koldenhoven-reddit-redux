@@ -1,20 +1,24 @@
 <nav class="navbar" ng-controller="navController">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#/">MEAN App</a>
+    <ul>
+        <li><a class="active" href="#">Volcanoes</a></li>
+        <li><a href="#add" ng-click="viewPostForm()">Add Post</a></li>
+        <div class="dropdown">
+            <button class="dropbtn">Sort By</button>
+            <div class="dropdown-content">
+                <select name="display" ng-model="display" ng-init="display='votes'">
+                    <option value="votes">Votes</option>
+                    <option value="date">Date</option>
+                    <option value="title">Title</option>
+                </select>
+            </div>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="#/">Home</a></li>
-                <li ng-show="!currentUser"><a href="#/login">Login/Register</a></li>
-                <li ng-show="currentUser"><a href="#/logout">Logout</a></li>
-            </ul>
-        </div><!--/.nav-collapse -->
-    </div>
+        <form>
+            <input type="text" class="search" placeholder="Search..." ng-model="searchText">
+        </form>
+        <li ng-show="!currentUser"><a href="#/login">Login/Register</a></li>
+        <li ng-show="currentUser"><a href="#/logout">Logout</a></li>
+    </ul>
 </nav>
+
+
+
