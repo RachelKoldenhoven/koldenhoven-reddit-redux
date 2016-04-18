@@ -1,7 +1,6 @@
 <!--display all posts-->
 <main ng-controller="RedditController">
     <div class="posts">
-        <p>{{ view.greeting }}</p>
         <div class="onePost" ng-repeat="post in view.allPosts | orderBy: '-' + display |  filter:searchText">
             <figure>
                 <img ng-src="{{post.image}}">

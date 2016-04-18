@@ -317,3 +317,14 @@ article {
   width: 65.88078%; }
   article:last-child {
     margin-right: 0; }
+
+
+.arrow {
+    max-width: 25px;
+    height:auto;
+}
+
+img {
+    max-width: 300px;
+    height:auto;
+}
