@@ -22,7 +22,7 @@ app.service('postDataService', ['$rootScope', 'crudService', function($rootScope
           return post;
         });
     },
-    removeStudent: function(postID) {
+    removePost: function(postID) {
       crudService.removeOne('posts', postID)
         .then(function(post) {
           return post;
